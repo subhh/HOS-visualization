@@ -1,8 +1,13 @@
 <?php
 
+
 $EXTPATH = (defined('TYPO3_MODE')) 
     ? \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY)
     : './';
+
+if (strpos(TYPO3\CMS\Core\Utility\GeneralUtility::getHostname(), 'hosdev') == false && !defined('TYPO3_MODE')) {
+    die('wrong hostname');
+}
 
 $count = 1907;
 $ts = '';    
@@ -44,7 +49,6 @@ $R =   "EXT:hosvisualization/$BAR";
             if (file_exists($foo)) {
                 $code = file_get_contents($foo);
                 file_put_contents($EXTPATH.$BAR.$basename,str_replace('/discovery/',$DISCOVERY_PATH, $code));
-                //copy($foo, $EXTPATH.$BAR.$basename);
             } 
               else echo($foo . " not found");
             $ts .= "page.includeJSFooter.$count  = $R$basename\n";
